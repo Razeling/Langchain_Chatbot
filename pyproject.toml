@@ -1,0 +1,21 @@
+[tool.black]
+line-length = 100
+target-version = ["py39"]
+extend-exclude = "(node_modules|.venv|data|logs|__pycache__)"
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = ["backend_app"]
+skip = ["node_modules", ".venv", "data", "logs"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+extend-exclude = ["node_modules", ".venv", "data", "logs", "__pycache__"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501", "F601", "F841"]
+
+

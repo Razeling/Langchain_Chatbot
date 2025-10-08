@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Python FastAPI Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - HOST=0.0.0.0
+      - PORT=8000
+      - VECTOR_STORE_PATH=/app/data/vector_store
+      - LOG_FILE=/app/logs/app.log
+    volumes:
+      - ./backend_app:/app/backend_app
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./requirements.txt:/app/requirements.txt
+    restart: unless-stopped
+    networks:
+      - app-network
+    working_dir: /app
+
+  # Next.js Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:8000
+      - NEXT_PUBLIC_ENABLE_STREAMING=true
+    volumes:
+      - ./app:/app/app
+      - ./components:/app/components
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./next.config.js:/app/next.config.js
+      - ./tailwind.config.js:/app/tailwind.config.js
+      - ./postcss.config.js:/app/postcss.config.js
+      - /app/node_modules
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - app-network
+    working_dir: /app
+
+networks:
+  app-network:
+    driver: bridge 

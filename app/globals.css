@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .chat-bubble {
+    @apply rounded-lg px-4 py-3 max-w-xs md:max-w-md lg:max-w-lg shadow-sm;
+  }
+  
+  .chat-bubble-user {
+    @apply chat-bubble bg-car-500 text-white ml-auto;
+  }
+  
+  .chat-bubble-assistant {
+    @apply chat-bubble bg-white text-gray-800 border border-gray-200;
+  }
+  
+  .function-call-result {
+    @apply bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-2;
+  }
+  
+  .source-citation {
+    @apply text-xs text-gray-500 bg-gray-100 rounded px-2 py-1 mr-1 mb-1 inline-block;
+  }
+  
+  .loading-dots {
+    @apply inline-flex space-x-1;
+  }
+  
+  .loading-dots div {
+    @apply w-2 h-2 bg-car-400 rounded-full animate-pulse;
+  }
+  
+  .loading-dots div:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .loading-dots div:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+} 
